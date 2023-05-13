@@ -1,5 +1,4 @@
 import json
-import os
 
 
 # PATH_TO_JSON = os.path.join("..", 'operations.json')
