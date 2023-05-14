@@ -2,7 +2,7 @@
 # import os
 class Operation:
 
-    def __init__(self, **kwargs):
+    def __init__(self, kwargs):
         for key, value in kwargs.items():
             if key == "from":
                 setattr(self, "sender", value)
@@ -18,7 +18,7 @@ class Operation:
         for diction in data:
             if not diction:
                 continue
-            operation = Operation(**diction)
+            operation = Operation(diction)
             list_of_operation.append(operation)
         return list_of_operation
 
