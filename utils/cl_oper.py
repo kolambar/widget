@@ -1,5 +1,5 @@
-import function
-import os
+# import function
+# import os
 class Operation:
 
     def __init__(self, **kwargs):
@@ -13,7 +13,6 @@ class Operation:
     def __repr__(self):
         return f'id: {self.id}, state: {self.state}, date: {self.date}, operationAmount: {self.operationAmount}, description: {self.description}, from: {self.sender}, to: {self.to}'
 
-    # @staticmethod
     def born_from_json(data):
         list_of_operation = []
         for diction in data:
@@ -23,6 +22,6 @@ class Operation:
             list_of_operation.append(operation)
         return list_of_operation
 
-data = function.from_json_to_data(os.path.join("..", 'operations.json'))
-
-print(Operation.born_from_json(data))
+# data = function.from_json_to_data(os.path.join("..", 'operations.json'))
+#
+# print(Operation.born_from_json(data))
