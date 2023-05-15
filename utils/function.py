@@ -10,5 +10,5 @@ def from_json_to_data(path_to_json):
 
 def time_metamorphosis(date):
     data_to_compare = datetime.datetime.strptime(date, '%Y-%m-%dT%H:%M:%S.%f')
-    data_to_print = data_to_compare.strftime('%d-%m-%Y')
+    data_to_print = data_to_compare.strftime('%d.%m.%Y')
     return data_to_compare, data_to_print
