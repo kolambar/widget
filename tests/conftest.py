@@ -1,4 +1,7 @@
 import pytest
+from utils.function import from_json_to_data
+import os
+from utils.cl_oper import Operation
 
 
 @pytest.fixture
@@ -23,3 +26,9 @@ def data_without_from():
 @pytest.fixture
 def empty_data():
     return [].copy()
+
+
+@pytest.fixture
+def full_list_of_class():
+    data = from_json_to_data(os.path.join("..", 'operations.json'))
+    return Operation.born_from_json(data)
