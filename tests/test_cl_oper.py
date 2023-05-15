@@ -34,3 +34,23 @@ def test_born_from_devastated_json(empty_data):
     test_element = Operation.born_from_json(empty_data)
     assert test_element == []
 
+'''
+1. получить список классов +
+2. отфильтровать функцией класса от непринятых и давних 
+3. получить время последовательно всех 5 оставшихся операций
+4. реализовать работу с датой и временем !!!
+5. сравнить время всех операций и убедиться, что они идут по порядку
+6. проверить что все операции прошли
+'''
+def test_filter(full_list_of_class):
+    last_five_executed = full_list_of_class.filter()
+    first = last_five_executed[0]
+    second = last_five_executed[1]
+    third = last_five_executed[2]
+    fourth = last_five_executed[3]
+    fifth = last_five_executed[4]
+    # first
+    # second
+    # third
+    # fourth
+    # fifth
