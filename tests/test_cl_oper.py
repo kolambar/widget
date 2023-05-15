@@ -23,10 +23,12 @@ def test_born_from_json():
     assert type(test_element[0]) is Operation
     assert test_element[0].id == 441945886
 
+
 def test_born_from_json_without_from(data_without_from):
     test_element = Operation.born_from_json(data_without_from)
     assert type(test_element[0]) is Operation
     assert test_element[0].sender == 'Счета отправителя нет. Это операция по открытию вклада.'
+
 
 def test_born_from_devastated_json(empty_data):
     test_element = Operation.born_from_json(empty_data)

@@ -18,6 +18,8 @@ def data_without_from():
         }
     ]
     return dict_without_from.copy()
+
+
 @pytest.fixture
 def empty_data():
     return [].copy()
