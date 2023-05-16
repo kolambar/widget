@@ -1,4 +1,6 @@
 from utils.function import time_metamorphosis
+
+
 class Operation:
 
     def __init__(self, kwargs):
@@ -10,7 +12,8 @@ class Operation:
             self.sender = getattr(self, "sender", "Счета отправителя нет. Это операция по открытию вклада.")
 
     def __repr__(self):
-        return f'id: {self.id}, state: {self.state}, date: {self.date}, operationAmount: {self.operationAmount}, description: {self.description}, from: {self.sender}, to: {self.to}'
+        return f'id: {self.id}, state: {self.state}, date: {self.date}, operationAmount: {self.operationAmount}, ' \
+               f'description: {self.description}, from: {self.sender}, to: {self.to}'
 
     @staticmethod
     def born_from_json(data):
