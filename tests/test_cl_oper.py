@@ -1,7 +1,5 @@
 from utils.cl_oper import Operation
-from utils.function import time_metamorphosis, from_json_to_data
-import os
-import datetime
+
 
 test_data = [
   {
@@ -40,11 +38,11 @@ def test_born_from_devastated_json(empty_data):
 
 '''
 1. получить список классов +
-2. отфильтровать функцией класса от непринятых и давних 
-3. получить время последовательно всех 5 оставшихся операций
+2. отфильтровать функцией класса от непринятых и давних +
+3. получить время последовательно всех 5 оставшихся операций 
 4. реализовать работу с датой и временем +
-5. сравнить время всех операций и убедиться, что они идут по порядку
-6. проверить что все операции прошли
+5. сравнить время всех операций и убедиться, что они идут по порядку +
+6. проверить что все операции прошли +
 '''
 def test_filter(full_list_of_class):
     sorted_executed_list = Operation.filter(full_list_of_class)
