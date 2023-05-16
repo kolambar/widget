@@ -36,21 +36,10 @@ class Operation:
     @staticmethod
     def blur_num(num):
         i, blur_num = 1, []
-        if num == 'Счета отправителя нет. Это операция по открытию вклада.':
+        if num == '':
             return num
         elif 'Счет ' in num:
-            for symbol in num:
-                if symbol.isdigit() and i < 17:
-                    symbol, i = '*', i + 1
-                    blur_num.append(symbol)
-                elif symbol in '0123456789':
-                    blur_num.append(symbol)
-                    i += 1
-            blur_num.insert(4, ' ')
-            blur_num.insert(9, ' ')
-            blur_num.insert(14, ' ')
-            blur_num.insert(19, ' ')
-            blur_num = ''.join(blur_num)
+            blur_num = '**' + num[-4:]
             return blur_num
         else:
             for symbol in num:
@@ -77,7 +66,7 @@ class Operation:
         elif 'МИР' in info:
             return 'МИР'
         elif 'Счета отправител' in info:
-            return None
+            return ''
         elif 'Счет' in info:
             return 'Счет'
         else:
