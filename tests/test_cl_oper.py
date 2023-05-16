@@ -36,14 +36,7 @@ def test_born_from_devastated_json(empty_data):
     test_element = Operation.born_from_json(empty_data)
     assert test_element == []
 
-'''
-1. получить список классов +
-2. отфильтровать функцией класса от непринятых и давних +
-3. получить время последовательно всех 5 оставшихся операций 
-4. реализовать работу с датой и временем +
-5. сравнить время всех операций и убедиться, что они идут по порядку +
-6. проверить что все операции прошли +
-'''
+
 def test_filter(full_list_of_class):
     sorted_executed_list = Operation.filter(full_list_of_class)
     assert sorted_executed_list[0].date > sorted_executed_list[1].date
@@ -52,3 +45,21 @@ def test_filter(full_list_of_class):
     assert sorted_executed_list[7].date > sorted_executed_list[11].date
     assert sorted_executed_list[20].date > sorted_executed_list[35].date
     assert sorted_executed_list[0].date_to_print == '08.12.2019'
+
+
+def test_blur_sender(full_list_of_class):
+    assert Operation.blur_num(full_list_of_class[0].sender) == '1596 83** **** 5199'
+    assert Operation.blur_num(full_list_of_class[1].sender) == '7158 30** **** 6758'
+    assert Operation.blur_num(full_list_of_class[2].sender) == '**** **** **** **** 6952'
+    assert Operation.blur_num(full_list_of_class[3].sender) == 'Счета отправителя нет. Это операция по открытию вклада.'
+    assert Operation.blur_num(full_list_of_class[8].sender) == '6831 98** **** 7658'
+
+
+def test_user_platform(full_list_of_class):
+    assert Operation.user_platform(full_list_of_class[0].sender) == 'Maestro'
+    assert Operation.user_platform(full_list_of_class[1].sender) == 'MasterCard'
+    assert Operation.user_platform(full_list_of_class[2].sender) == 'Счет'
+    assert Operation.user_platform(full_list_of_class[3].sender) == None
+    assert Operation.user_platform(full_list_of_class[8].to) == 'Visa Platinum'
+    assert Operation.user_platform(full_list_of_class[15].to) == 'Visa Gold'
+    assert Operation.user_platform(full_list_of_class[34].to) == 'МИР'

@@ -1,5 +1,3 @@
-import os
-# from function import from_json_to_data
 from utils.function import time_metamorphosis
 class Operation:
 
@@ -32,6 +30,52 @@ class Operation:
         sorted_executed_list = sorted(list_of_classes_executed, key=lambda operation: operation.date, reverse=True)
         return sorted_executed_list
 
-# data = from_json_to_data(os.path.join("..", 'operations.json'))
-#
-# print(Operation.born_from_json(data))
+    @staticmethod
+    def blur_num(num):
+        i, blur_num = 1, []
+        if num == 'Счета отправителя нет. Это операция по открытию вклада.':
+            return num
+        elif 'Счет ' in num:
+            for symbol in num:
+                if symbol.isdigit() and i < 17:
+                    symbol, i = '*', i + 1
+                    blur_num.append(symbol)
+                elif symbol in '0123456789':
+                    blur_num.append(symbol)
+                    i += 1
+            blur_num.insert(4, ' ')
+            blur_num.insert(9, ' ')
+            blur_num.insert(14, ' ')
+            blur_num.insert(19, ' ')
+            blur_num = ''.join(blur_num)
+            return blur_num
+        else:
+            for symbol in num:
+                if symbol.isdigit() and 6 < i < 13:
+                    symbol, i = '*', i + 1
+                    blur_num.append(symbol)
+                elif symbol in '0123456789':
+                    blur_num.append(symbol)
+                    i += 1
+            blur_num.insert(4, ' ')
+            blur_num.insert(9, ' ')
+            blur_num.insert(14, ' ')
+            blur_num = ''.join(blur_num)
+            return blur_num
+
+    @staticmethod
+    def user_platform(info):
+        if 'Visa Platinum' in info:
+            return 'Visa Platinum'
+        elif 'Visa Gold' in info:
+            return 'Visa Gold'
+        elif 'Maestro' in info:
+            return 'Maestro'
+        elif 'МИР' in info:
+            return 'МИР'
+        elif 'Счета отправител' in info:
+            return None
+        elif 'Счет' in info:
+            return 'Счет'
+        else:
+            return 'MasterCard'
