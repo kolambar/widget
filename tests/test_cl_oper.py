@@ -50,8 +50,8 @@ def test_filter(full_list_of_class):
 def test_blur_sender(full_list_of_class):
     assert Operation.blur_num(full_list_of_class[0].sender) == '1596 83** **** 5199'
     assert Operation.blur_num(full_list_of_class[1].sender) == '7158 30** **** 6758'
-    assert Operation.blur_num(full_list_of_class[2].sender) == '**** **** **** **** 6952'
-    assert Operation.blur_num(full_list_of_class[3].sender) == 'Счета отправителя нет. Это операция по открытию вклада.'
+    assert Operation.blur_num(full_list_of_class[2].sender) == '**6952'
+    assert Operation.blur_num(full_list_of_class[3].sender) == '   '
     assert Operation.blur_num(full_list_of_class[8].sender) == '6831 98** **** 7658'
 
 
@@ -59,7 +59,7 @@ def test_user_platform(full_list_of_class):
     assert Operation.user_platform(full_list_of_class[0].sender) == 'Maestro'
     assert Operation.user_platform(full_list_of_class[1].sender) == 'MasterCard'
     assert Operation.user_platform(full_list_of_class[2].sender) == 'Счет'
-    assert Operation.user_platform(full_list_of_class[3].sender) == None
+    assert Operation.user_platform(full_list_of_class[3].sender) == ''
     assert Operation.user_platform(full_list_of_class[8].to) == 'Visa Platinum'
     assert Operation.user_platform(full_list_of_class[15].to) == 'Visa Gold'
     assert Operation.user_platform(full_list_of_class[34].to) == 'МИР'
