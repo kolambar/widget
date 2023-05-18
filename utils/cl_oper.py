@@ -1,4 +1,4 @@
-from utils.function import time_metamorphosis
+import datetime
 
 
 class Operation:
@@ -17,7 +17,7 @@ class Operation:
             else:
                 setattr(self, key, value)
             # добавляет поле sender, если не было ключа "fore"
-            self.sender = getattr(self, "sender", "Счета отправителя нет. Это операция по открытию вклада.")
+            self.sender = getattr(self, "sender", "")
 
     def __repr__(self):
         '''
@@ -27,6 +27,17 @@ class Operation:
         '''
         return f'id: {self.id}, state: {self.state}, date: {self.date}, operationAmount: {self.operationAmount}, ' \
                f'description: {self.description}, from: {self.sender}, to: {self.to}'
+
+    def time_metamorphosis(self, date):
+        '''
+        превращает дату формата файла json из строки в data_to_compare, data_to_print
+        data_to_compare нужна, чтобы сравнивать по хронологии. формат datatime
+        data_to_print дата в удобном виде для вывода пользователю
+        :param date:
+        :return data_to_compare, data_to_print:
+        '''
+        self.date_to_compare = datetime.datetime.strptime(date, '%Y-%m-%dT%H:%M:%S.%f')
+        self.date_to_print = self.date_to_compare.strftime('%d.%m.%Y')
 
     @staticmethod
     def born_from_json(data):
@@ -46,7 +57,7 @@ class Operation:
         return list_of_classes
 
     @staticmethod
-    def filter(list_of_classes):
+    def bagger(list_of_classes):
         '''
         принимает список классов и сортирует его в список sorted_executed_list
         при сортировки убираются отклоненные операции, ставшиеся операции сортируются по дате от новых к старым
@@ -55,7 +66,7 @@ class Operation:
         :return sorted_executed_list:
         '''
         for instance in list_of_classes:
-            instance.date, instance.date_to_print = time_metamorphosis(instance.date) # добавляет поле классу для сравнения по времени операции
+            instance.time_metamorphosis(instance.date) # добавляет поле классу для сравнения по времени операции
         list_of_classes_executed = [instance for instance in list_of_classes if instance.state == 'EXECUTED'] # отсеивание непрошедших операций
         sorted_executed_list = sorted(list_of_classes_executed, key=lambda operation: operation.date, reverse=True) # сортировка по времени
         return sorted_executed_list
@@ -66,46 +77,10 @@ class Operation:
         затирает часть чисел в номерах
         после этого, номера можно печатать
         '''
-        i, blur_num = 1, []  # счетчик i начинает увеличиваться, когда код доходит до цифр
-        if num == '': # проверка, что был счет отправки
-            return num
-        elif 'Счет ' in num: # для счета отправки особый способ маскировки, так как в нем на 4 цифры больше
-            blur_num = '**' + num[-4:]
-            return blur_num
-        else:
-            for symbol in num:
-                if symbol.isdigit() and 6 < i < 13: # когда счетчик i в (6:13), код начинает прятать цифры номера за "*"
-                    symbol, i = '*', i + 1
-                    blur_num.append(symbol)
-                elif symbol.isdigit(): # если символ цифра и i не в промежутке, символ записывается
-                    blur_num.append(symbol)
-                    i += 1
+        if num: # проверяет, что номер есть
+            num_string = num.split(' ')
 
-            # расставляем пробелы через каждые 4 цифры для удобства чтения
-            blur_num.insert(4, ' ')
-            blur_num.insert(9, ' ')
-            blur_num.insert(14, ' ')
-
-            blur_num = ''.join(blur_num)
-            return blur_num
-
-    @staticmethod
-    def user_platform(info):
-        '''
-        получает информацию о отправителе и получателе возвращает только название карты или счет
-        :param info:
-        '''
-        if 'Visa Platinum' in info:
-            return 'Visa Platinum'
-        elif 'Visa Gold' in info:
-            return 'Visa Gold'
-        elif 'Maestro' in info:
-            return 'Maestro'
-        elif 'МИР' in info:
-            return 'МИР'
-        elif 'Счета отправител' in info:
-            return ''
-        elif 'Счет' in info:
-            return 'Счет'
-        else:
-            return 'MasterCard'
+            if num_string[0] == 'Счет': # для счета свой алгоритм. в нем на 4 цифры больше
+                return 'Счет ' + '**' + num_string[1][-4:]
+            else:
+                return ' '.join(num_string[:-1]) + ' ' + num_string[-1][:4] + ' ' + num_string[-1][4:6] + '** **** ' + num_string[-1][-4:]

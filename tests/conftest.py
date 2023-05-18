@@ -32,3 +32,9 @@ def empty_data():
 def full_list_of_class():
     data = from_json_to_data(os.path.join("..", 'operations.json'))
     return Operation.born_from_json(data)
+
+
+@pytest.fixture
+def element_of_class():
+    element_of_class = Operation({'date': "2018-06-30T02:08:58.425572"})
+    return element_of_class
